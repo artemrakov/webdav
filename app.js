@@ -8,6 +8,14 @@ const server = new webdav.WebDAVServer({
     port: 3000
 });
 
+server.beforeRequest((arg, next) => {
+    // filter requests
+    if(arg.request.uri.includes('vtt')) {
+        next();
+    }
+});
+
+
 server.afterRequest((arg, next) => {
     // Display the method, the URI, the returned status code and the returned message
     console.log('>>', arg.request.method, arg.requested.uri, '>', arg.response.statusCode, arg.response.statusMessage);
@@ -17,6 +25,7 @@ server.afterRequest((arg, next) => {
 });
 
 server.setFileSystem('/webdav', new webdav.PhysicalFileSystem('/home/ubuntu/output'), (success) => {
+
     server.start(() => console.log('READY'));
 })
 
