@@ -4,15 +4,26 @@ const express = require('express');
 // const server = new webdav.WebDAVServer();
 // const app = express();
 
-const server = new webdav.WebDAVServer({
-    port: 3000
-});
 
-server.beforeRequest((arg, next) => {
-    // filter requests
-    if(arg.request.uri.includes('vtt')) {
-        next();
+class FileNameFilterPrivilegeManager extends webdav.PrivilegeManager {
+  constructor(allowedFileNames) {
+    super();
+    this.allowedFileNames = allowedFileNames;
+  }
+
+  _can(path, user, callback) {
+    const fileName = path.fileName();
+    if (this.allowedFileNames.includes(fileName)) {
+      callback(null, true);
+    } else {
+      callback(null, false);
     }
+  }
+}
+
+const server = new webdav.WebDAVServer({
+    port: 3000,
+    privilegeManager: new FileNameFilterPrivilegeManager(['vtt']),
 });
 
 
@@ -26,7 +37,10 @@ server.afterRequest((arg, next) => {
 
 server.setFileSystem('/webdav', new webdav.PhysicalFileSystem('/home/ubuntu/output'), (success) => {
 
-    server.start(() => console.log('READY'));
+    server.start((s) => {
+        const port = s.address().port;
+        console.log('Ready on port', port);
+    });
 })
 
 // Mount the WebDAVServer instance
