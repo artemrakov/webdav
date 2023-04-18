@@ -25,7 +25,7 @@ class FileNameFilterPrivilegeManager extends webdav.PrivilegeManager {
 
 const server = new webdav.WebDAVServer({
     port: 3000,
-    privilegeManager: new FileNameFilterPrivilegeManager(["vtt"]),
+    privilegeManager: new FileNameFilterPrivilegeManager("vtt"),
 });
 
 server.afterRequest((arg, next) => {
