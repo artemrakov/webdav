@@ -12,6 +12,7 @@ class FileNameFilterPrivilegeManager extends webdav.PrivilegeManager {
 
     can(user, path, rights, callback) {
         const uri = path.context.requested.uri;
+        console.log("uri", uri)
         if (this.allowedFileNames.includes(uri)) {
             super.can(user, path, rights, callback);
         } else {
