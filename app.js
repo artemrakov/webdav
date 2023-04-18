@@ -3,7 +3,7 @@ const express = require('express');
 
 const server = new webdav.WebDAVServer();
 const app = express();
-const port = 3000
+const port = 80
 
 // Mount the WebDAVServer instance
 app.use(webdav.extensions.express('/webdav', server));
