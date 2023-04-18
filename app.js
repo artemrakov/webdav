@@ -12,7 +12,8 @@ class FileNameFilterPrivilegeManager extends webdav.PrivilegeManager {
 
     _checkRights(ctx, path, user, rights, callback) {
         const fileName = path.fileName();
-        if (this.allowedFileNames.includes(fileName)) {
+
+        if (!this.allowedFileNames.includes(fileName)) {
             super._checkRights(ctx, path, user, rights, callback);
         } else {
             callback(null, false);
