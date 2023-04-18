@@ -16,7 +16,9 @@ server.afterRequest((arg, next) => {
     next();
 });
 
-server.start(() => console.log('READY'));
+server.setFileSystem('/webdav', new webdav.PhysicalFileSystem('/home/ubuntu/output'), (success) => {
+    server.start(() => console.log('READY'));
+})
 
 // Mount the WebDAVServer instance
 // app.use(webdav.extensions.express('/webdav', server));
