@@ -4,25 +4,25 @@ const express = require("express");
 // const server = new webdav.WebDAVServer();
 // const app = express();
 
-class FileNameFilterPrivilegeManager extends webdav.PrivilegeManager {
-    constructor(allowedFileNames) {
-        super();
-        this.allowedFileNames = allowedFileNames;
-    }
-
-    can(user, path, rights, callback) {
-        const uri = path.context.requested.uri;
-        if (uri.includes(this.allowedFileNames)) {
-            super.can(user, path, rights, callback);
-        } else {
-            callback(null, false);
-        }
-    }
-}
+// class FileNameFilterPrivilegeManager extends webdav.PrivilegeManager {
+//     constructor(allowedFileNames) {
+//         super();
+//         this.allowedFileNames = allowedFileNames;
+//     }
+//
+//     can(user, path, rights, callback) {
+//         const uri = path.context.requested.uri;
+//         if (uri.includes(this.allowedFileNames)) {
+//             super.can(user, path, rights, callback);
+//         } else {
+//             callback(null, false);
+//         }
+//     }
+// }
 
 const server = new webdav.WebDAVServer({
     port: 3000,
-    privilegeManager: new FileNameFilterPrivilegeManager("vtt"),
+    // privilegeManager: new FileNameFilterPrivilegeManager("vtt"),
 });
 
 server.afterRequest((arg, next) => {
