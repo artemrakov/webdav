@@ -25,11 +25,11 @@ const server = new webdav.WebDAVServer({
     // privilegeManager: new FileNameFilterPrivilegeManager("vtt"),
 });
 
-server.beforeRequest((arg, next) => {
-    console.log("ARG:", arg);
-
-    next()
-})
+// server.beforeRequest((arg, next) => {
+//     console.log("ARG:", arg);
+//
+//     next()
+// })
 
 server.afterRequest((arg, next) => {
     // Display the method, the URI, the returned status code and the returned message
